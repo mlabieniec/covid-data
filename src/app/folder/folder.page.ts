@@ -64,28 +64,27 @@ export class FolderPage implements OnInit {
       duration: 2000
     });
     loading.present();
-    const geo = await this.geoService.getLocation();
-    
-    if (geo && geo.location && geo.location.country) {
-      this.countryData = await this.covid.country(geo.location.country).toPromise();
-    } else {
-      console.log('Could not load country data');
-    }
-
-    if (geo && geo.location && geo.location.region) {
-      try {
-        this.covid.states().toPromise().then((states:Array<State>) => {
-          states.forEach((state:State) => {
-            if (state.state === geo.location.region) {
-              this.regionData = state;
-            }
-          });
-        });
-      } catch (error) {
-        console.log('error parsing region: ', error);
+    try {
+      const geo = await this.geoService.getLocation();
+      if (geo && geo.location && geo.location.country) {
+        this.countryData = await this.covid.country(geo.location.country).toPromise();
+      } else {
+        console.log('Could not load country data');
       }
-    } else {
-      console.log('Could not load region data');
+      if (geo && geo.location && geo.location.region) {
+          this.covid.states().toPromise().then((states:Array<State>) => {
+            states.forEach((state:State) => {
+              if (state.state === geo.location.region) {
+                this.regionData = state;
+              }
+            });
+          });
+      } else {
+        console.log('Could not load region data');
+      }
+    } catch (error) {
+      console.log('Failed to load location data');
+      return console.log(error);
     }
     loading.dismiss();
   }
