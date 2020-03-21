@@ -55,16 +55,26 @@ export class FolderPage implements OnInit {
     }
   }
 
+  refresh() {
+    this.getAllData();
+    this.initLocation();
+  }
+
   async initLocation() {
+    const loading = await this.loadingController.create({
+      message: 'Getting Your Location Data...',
+      duration: 2000
+    });
+    loading.present();
     const geo = await this.geoService.getLocation();
     
-    if (geo.location.country) {
+    if (geo && geo.location && geo.location.country) {
       this.countryData = await this.covid.country(geo.location.country).toPromise();
     } else {
       console.log('Could not load country data');
     }
 
-    if (geo.location.region) {
+    if (geo && geo.location && geo.location.region) {
       try {
         this.covid.states().toPromise().then((states:Array<State>) => {
           states.forEach((state:State) => {
@@ -79,6 +89,7 @@ export class FolderPage implements OnInit {
     } else {
       console.log('Could not load region data');
     }
+    loading.dismiss();
   }
 
   sort(){
@@ -96,7 +107,7 @@ export class FolderPage implements OnInit {
 
   async getAllData() { 
     const loading = await this.loadingController.create({
-      message: 'Please wait...',
+      message: 'Getting World Stats...',
       duration: 2000
     });
     loading.present();   

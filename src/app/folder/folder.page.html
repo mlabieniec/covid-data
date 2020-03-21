@@ -8,6 +8,10 @@
       <ion-button type="button" (click)="sort()">Sort</ion-button>
     </ion-buttons>
 
+    <ion-buttons slot="end" *ngIf="folder === 'Dashboard'">
+      <ion-button type="button" (click)="refresh()">Refresh</ion-button>
+    </ion-buttons>
+
     <ion-title>{{ folder }}</ion-title>
   </ion-toolbar>
 </ion-header>
