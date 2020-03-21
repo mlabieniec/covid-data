@@ -84,7 +84,7 @@ export class FolderPage implements OnInit {
       }
     } catch (error) {
       console.log('Failed to load location data');
-      return console.log(error);
+      console.log(error);
     }
     loading.dismiss();
   }
@@ -108,15 +108,18 @@ export class FolderPage implements OnInit {
       duration: 2000
     });
     loading.present();   
-    this.all = await this.covid.all().toPromise();
-    this.percentRecovered = ((this.all.recovered as any) / (this.all.cases as any)*100).toFixed(2) + '%';
-    this.percentDied = ((this.all.deaths as any) / (this.all.cases as any)*100).toFixed(2) + '%';
-    this.bookmarks = this.bookmarkService.bookmarks;
-    this.bookmarkService.bookmarkSub.subscribe(
-      (item:any) => this.bookmarks = this.bookmarkService.bookmarks
-    );
+    try {
+      this.all = await this.covid.all().toPromise();
+      this.percentRecovered = ((this.all.recovered as any) / (this.all.cases as any)*100).toFixed(2) + '%';
+      this.percentDied = ((this.all.deaths as any) / (this.all.cases as any)*100).toFixed(2) + '%';
+      this.bookmarks = this.bookmarkService.bookmarks;
+      this.bookmarkService.bookmarkSub.subscribe(
+        (item:any) => this.bookmarks = this.bookmarkService.bookmarks
+      );
+    } catch (error) {
+      console.log('Failed to load covid data', error);
+    }
     loading.dismiss();
-    
     setTimeout(() => this.initLocation());
   }
 

@@ -25,7 +25,7 @@
 
   <div class="container" *ngIf="all && folder === 'Dashboard'">
     <h1 class="capitalize">{{ all.updated | date }}</h1>
-    <ion-card *ngIf="countryData">
+    <ion-card>
       <ion-card-header>
         <ion-card-title>The World (Earth)</ion-card-title>
       </ion-card-header>
@@ -35,7 +35,6 @@
         <p> Cases: {{ all.cases | number}} -- Deaths: {{ all.deaths | number}} -- Recovered: {{ all.recovered | number}} </p>
       </ion-card-content>
     </ion-card>
-    
     <ion-card *ngIf="countryData">
       <ion-card-header>
         <ion-card-title>Your Country ({{ countryData.country }})</ion-card-title>
@@ -60,8 +59,8 @@
       </ion-card-content>
     </ion-card>
     
+    <h1 class="capitalize">Bookmarks</h1>
     <ion-list *ngIf="bookmarks">
-      <ion-list-header>Bookmarks</ion-list-header>
       <ion-item *ngFor="let key of objectKeys(bookmarks)" lines="none">
         <ion-label>
           <h2><strong>{{ key }}</strong></h2>
