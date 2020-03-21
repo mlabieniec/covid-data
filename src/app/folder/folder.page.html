@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    
+
     <ion-buttons slot="end" *ngIf="folder === 'Countries' || folder === 'Regions'">
       <ion-button type="button" (click)="sort()">Sort</ion-button>
     </ion-buttons>
@@ -32,7 +32,12 @@
       <ion-card-content>
         <h2 class="green">{{ percentRecovered }} Recovered</h2>
         <h2>{{ percentDied }} Dead</h2>
-        <p> Cases: {{ all.cases | number}} -- Deaths: {{ all.deaths | number}} -- Recovered: {{ all.recovered | number}} </p>
+        <hr />
+        <p>
+          <ion-chip>Cases: <strong>{{ all.cases | number}}</strong></ion-chip>
+          <ion-chip>Deaths: <strong>{{ all.deaths | number}}</strong></ion-chip>
+          <ion-chip>Recovered: <strong>{{ all.recovered | number}}</strong></ion-chip>
+        </p>
       </ion-card-content>
     </ion-card>
     <ion-card *ngIf="countryData">
@@ -40,9 +45,17 @@
         <ion-card-title>Your Country ({{ countryData.country }})</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <h2> Cases Today: {{ countryData.todayCases | number }} -- Deaths Today: {{ countryData.todayDeaths | number }} </h2>
-        <p> Cases: {{ countryData.cases | number}} -- Deaths: {{ countryData.deaths | number}} -- Recovered: {{ countryData.recovered | number}} </p>
-        <hr/>
+        <h2 class="green">{{ percentCountryRecovered }} Recovered</h2>
+        <h2>{{ percentCountryDied }} Dead</h2>
+        <hr />
+        <ion-chip>Cases Today: {{ countryData.todayCases | number }}</ion-chip>
+        <ion-chip>Deaths Today: {{ countryData.todayDeaths | number }}</ion-chip>
+        <p>
+          <ion-chip color="secondary">Cases: {{ countryData.cases | number}}</ion-chip>
+          <ion-chip color="secondary">Deaths: {{ countryData.deaths | number}}</ion-chip>
+          <ion-chip color="secondary">Recovered:{{ countryData.recovered | number}}</ion-chip>
+        </p>
+        <hr />
         <ion-badge color="tertiary">ACTIVE: {{ countryData.active | number }}</ion-badge>
       </ion-card-content>
     </ion-card>
@@ -52,25 +65,37 @@
         <ion-card-title>Your Region ({{ regionData.state }})</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <h2> Cases Today: {{ regionData.todayCases | number }} -- Deaths Today: {{ regionData.todayDeaths | number }} </h2>
-        <p> Cases: {{ regionData.cases | number}} -- Deaths: {{ regionData.deaths | number}} -- Recovered: {{ regionData.recovered | number}} </p>
-        <hr/>
+        <h2 class="green">{{ percentStateRecovered }} Recovered</h2>
+        <h2>{{ percentStateDied }} Dead</h2>
+        <hr />
+        <ion-chip>Cases Today: {{ regionData.todayCases | number }}</ion-chip>
+        <ion-chip>Deaths Today: {{ regionData.todayDeaths | number }}</ion-chip>
+        <p>
+          <ion-chip color="secondary">Cases: {{ regionData.cases | number}}</ion-chip>
+          <ion-chip color="secondary">Deaths: {{ regionData.deaths | number}}</ion-chip>
+          <ion-chip color="secondary">Recovered: {{ regionData.recovered | number}} </ion-chip>
+        </p>
+        <hr />
         <ion-badge color="tertiary">ACTIVE: {{ regionData.active | number }}</ion-badge>
       </ion-card-content>
     </ion-card>
-    
+
     <h1 class="capitalize">Bookmarks</h1>
     <ion-list *ngIf="bookmarks">
       <ion-item *ngFor="let key of objectKeys(bookmarks)" lines="none">
         <ion-label>
           <h2><strong>{{ key }}</strong></h2>
-          <h3> Cases Today: {{ bookmarks[key].todayCases | number }} -- Deaths Today: {{ bookmarks[key].todayDeaths | number }} </h3>
-          <p> Cases: {{ bookmarks[key].cases | number}}
-              <br/>Deaths: {{ bookmarks[key].deaths | number}}, 
-              <br/>Recovered: {{ bookmarks[key].recovered | number}} </p>
+          <ul>
+            <li>Cases Today: {{ bookmarks[key].todayCases | number }}</li>
+            <li>Deaths Today: {{ bookmarks[key].todayDeaths | number }}</li>
+            <li>All Cases: {{ bookmarks[key].cases | number}}</li>
+            <li>All Deaths: {{ bookmarks[key].deaths | number}}</li>
+            <li>All Recovered: {{ bookmarks[key].recovered | number}}</li>
+          </ul>
         </ion-label>
         <ion-badge color="tertiary">{{ bookmarks[key].active | number }}</ion-badge>
-        <ion-icon slot="start" ios="close-circle-outline" md="close-circle-sharp" class="icon-button" (click)="removeBookmark(bookmarks[key])"></ion-icon>
+        <ion-icon slot="start" ios="close-circle-outline" md="close-circle-sharp" class="icon-button"
+          (click)="removeBookmark(bookmarks[key])"></ion-icon>
       </ion-item>
     </ion-list>
 
@@ -78,32 +103,36 @@
 
   <div *ngIf="countries && folder === 'Countries'">
     <ion-searchbar [(ngModel)]="terms"></ion-searchbar>
-      <ion-list>
-        <ion-item *ngFor="let item of countries | search : terms | sort: {property: column, order: order}">
-          <ion-label>
-            <h2><strong>{{ item.country }}</strong></h2>
-            <h3> Cases Today: {{ item.todayCases | number }}, Deaths Today: {{ item.todayDeaths | number }} </h3>
-            <p> Cases: {{ item.cases | number}}, Deaths: {{ item.deaths | number}}, Recovered: {{ item.recovered | number}} </p>
-          </ion-label>
-          <ion-badge color="tertiary">{{ item.active | number }}</ion-badge>
-          <ion-icon slot="start" ios="add-circle-outline" md="add-circle-sharp" class="icon-button" (click)="addBookmark(item)"></ion-icon>
-        </ion-item>
-      </ion-list>
+    <ion-list>
+      <ion-item *ngFor="let item of countries | search : terms | sort: {property: column, order: order}">
+        <ion-label>
+          <h2><strong>{{ item.country }}</strong></h2>
+          <h3> Cases Today: {{ item.todayCases | number }}, Deaths Today: {{ item.todayDeaths | number }} </h3>
+          <p> Cases: {{ item.cases | number}}, Deaths: {{ item.deaths | number}}, Recovered:
+            {{ item.recovered | number}} </p>
+        </ion-label>
+        <ion-badge color="tertiary">{{ item.active | number }}</ion-badge>
+        <ion-icon slot="start" ios="add-circle-outline" md="add-circle-sharp" class="icon-button"
+          (click)="addBookmark(item)"></ion-icon>
+      </ion-item>
+    </ion-list>
   </div>
 
   <div *ngIf="states && folder === 'Regions'">
     <ion-searchbar [(ngModel)]="terms"></ion-searchbar>
-      <ion-list>
-        <ion-item *ngFor="let item of states | search : terms | sort: {property: column, order: order}">
-          <ion-label>
-            <h2><strong>{{ item.state }}</strong></h2>
-            <h3> Cases Today: {{ item.todayCases | number }}, Deaths Today: {{ item.todayDeaths | number }} </h3>
-            <p> Cases: {{ item.cases | number}}, Deaths: {{ item.deaths | number}}, Recovered: {{ item.recovered | number}} </p>
-          </ion-label>
-          <ion-badge color="tertiary">{{ item.active | number }}</ion-badge>
-          <ion-icon slot="start" ios="add-circle-outline" md="add-circle-sharp" class="icon-button" (click)="addBookmark(item)"></ion-icon>
-        </ion-item>
-      </ion-list>
+    <ion-list>
+      <ion-item *ngFor="let item of states | search : terms | sort: {property: column, order: order}">
+        <ion-label>
+          <h2><strong>{{ item.state }}</strong></h2>
+          <h3> Cases Today: {{ item.todayCases | number }}, Deaths Today: {{ item.todayDeaths | number }} </h3>
+          <p> Cases: {{ item.cases | number}}, Deaths: {{ item.deaths | number}}, Recovered:
+            {{ item.recovered | number}} </p>
+        </ion-label>
+        <ion-badge color="tertiary">{{ item.active | number }}</ion-badge>
+        <ion-icon slot="start" ios="add-circle-outline" md="add-circle-sharp" class="icon-button"
+          (click)="addBookmark(item)"></ion-icon>
+      </ion-item>
+    </ion-list>
   </div>
 
   <div class="container" *ngIf="folder === 'Historical'">
