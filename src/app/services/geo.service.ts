@@ -19,9 +19,12 @@ export class GeoService {
       return JSON.parse(window.localStorage.getItem('geo'));
     }
     this._geo = await this.http.get(this._geoApi).toPromise();
-    this._persistGeo();
-
-    return Promise.resolve(this._geo);
+    if (this._geo) {
+      this._persistGeo();
+      return Promise.resolve(this._geo);
+    } else {
+      return Promise.reject("Could not load geo data");
+    }
   }
 
   private _persistGeo() {

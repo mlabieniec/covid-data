@@ -39,7 +39,6 @@ export class FolderPage implements OnInit {
       case 'Dashboard':
         if (!this.all) {
           this.getAllData();
-          this.initLocation();
         }
         break;
       case 'Countries':
@@ -57,7 +56,6 @@ export class FolderPage implements OnInit {
 
   refresh() {
     this.getAllData();
-    this.initLocation();
   }
 
   async initLocation() {
@@ -119,6 +117,8 @@ export class FolderPage implements OnInit {
       (item:any) => this.bookmarks = this.bookmarkService.bookmarks
     );
     loading.dismiss();
+    
+    setTimeout(() => this.initLocation());
   }
 
   async getCountriesData() {
