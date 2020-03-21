@@ -127,8 +127,19 @@ export class FolderPage implements OnInit {
     this.order = this.descending ? 1 : -1;
   }
 
+  addHomeCountry(c: Country) {
+    this.geoService.setHomeCountry(c);
+    alert("Home country updated, refresh the dashboard");
+  }
+
+  addHomeState(s: State) {
+    this.geoService.setHomeState(s);
+    alert("Home region updated, refresh the dashboard");
+  }
+
   addBookmark(item: Country | State) {
     this.bookmarkService.add(item);
+    alert("Bookmark has been added");
   }
 
   removeBookmark(item) {
