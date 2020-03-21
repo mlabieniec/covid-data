@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { BookmarkService } from './services/bookmark.service';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
+  public objectKeys = Object.keys;
   public appPages = [
     {
       title: 'World',
@@ -33,12 +35,13 @@ export class AppComponent implements OnInit {
       icon: 'archive'
     }
   ];
-  public bookmarks = [];
+  public bookmarks = {};
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private bookmarkService: BookmarkService
   ) {
     this.initializeApp();
   }
@@ -47,7 +50,22 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.initBookmarks();
     });
+  }
+
+  initBookmarks() {
+    this.bookmarks = this.bookmarkService.bookmarks;
+    this.bookmarkService.bookmarkSub.subscribe(
+      (item:any) => {
+        this.bookmarks = this.bookmarkService.bookmarks;
+      }
+    )
+  }
+
+  removeBookmark(item) {
+    console.log('remove: ', item);
+    this.bookmarkService.remove(item);
   }
 
   ngOnInit() {

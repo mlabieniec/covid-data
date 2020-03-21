@@ -14,12 +14,19 @@
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-list id="labels-list">
+        <ion-list id="labels-list" *ngIf="bookmarks">
           <ion-list-header>Bookmarks</ion-list-header>
-
-          <ion-item *ngFor="let label of bookmarks" lines="none">
-            <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-            <ion-label>{{ label }}</ion-label>
+          
+          <ion-item *ngFor="let key of objectKeys(bookmarks)" lines="none">
+            <ion-label>
+              <h2><strong>{{ key }}</strong></h2>
+              <h3> Cases Today: {{ bookmarks[key].todayCases | number }}, Deaths Today: {{ bookmarks[key].todayDeaths | number }} </h3>
+              <p> Cases: {{ bookmarks[key].cases | number}}
+                  <br/>Deaths: {{ bookmarks[key].deaths | number}}, 
+                  <br/>Recovered: {{ bookmarks[key].recovered | number}} </p>
+            </ion-label>
+            <ion-badge color="tertiary">{{ bookmarks[key].active | number }}</ion-badge>
+            <ion-icon slot="start" ios="close-circle-outline" md="close-circle-sharp" class="icon-button" (click)="removeBookmark(bookmarks[key])"></ion-icon>
           </ion-item>
         </ion-list>
       </ion-content>

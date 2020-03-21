@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { All, Country, CovidService, State } from '../services/covid.service';
 import { LoadingController } from '@ionic/angular';
+import { BookmarkService } from '../services/bookmark.service';
 
 @Component({
   selector: 'app-folder',
@@ -21,7 +22,11 @@ export class FolderPage implements OnInit {
   order: number;
   column: string = 'country';
 
-  constructor(private activatedRoute: ActivatedRoute, private covid:CovidService, public loadingController: LoadingController) { }
+  constructor(
+    private activatedRoute: ActivatedRoute, 
+    private covid:CovidService, 
+    private bookmarks:BookmarkService,
+    public loadingController: LoadingController ) { }
 
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
@@ -50,6 +55,7 @@ export class FolderPage implements OnInit {
 
   async addBookmark(item:Country|State) {
     console.log('add: ', item);
+    this.bookmarks.add(item);
   }
 
   async getAllData() { 
