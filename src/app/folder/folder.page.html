@@ -19,35 +19,58 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="container" *ngIf="all && folder === 'World'">
-    <h2 class="capitalize">{{ all.updated | date }}</h2>
-    <h4 class="green">{{ percentRecovered }} Recovered</h4>
-    <h4>{{ percentDied }} Dead</h4>
-    <hr/>
-    <ion-card>
+  <div class="container" *ngIf="all && folder === 'World'">
+    <h1 class="capitalize">{{ all.updated | date }}</h1>
+    <ion-card *ngIf="countryData">
       <ion-card-header>
-        <ion-card-title>Cases</ion-card-title>
+        <ion-card-title>The World (Earth)</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <h1>{{ all.cases | number }}</h1>
+        <h2 class="green">{{ percentRecovered }} Recovered</h2>
+        <h2>{{ percentDied }} Dead</h2>
+        <p> Cases: {{ all.cases | number}} -- Deaths: {{ all.deaths | number}} -- Recovered: {{ all.recovered | number}} </p>
       </ion-card-content>
     </ion-card>
-    <ion-card>
+    
+    <ion-card *ngIf="countryData">
       <ion-card-header>
-        <ion-card-title>Recovered</ion-card-title>
+        <ion-card-title>Your Country ({{ countryData.country }})</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <h1 class="green">{{ all.recovered | number }}</h1>
+        <h2> Cases Today: {{ countryData.todayCases | number }} -- Deaths Today: {{ countryData.todayDeaths | number }} </h2>
+        <p> Cases: {{ countryData.cases | number}} -- Deaths: {{ countryData.deaths | number}} -- Recovered: {{ countryData.recovered | number}} </p>
+        <hr/>
+        <ion-badge color="tertiary">ACTIVE: {{ countryData.active | number }}</ion-badge>
       </ion-card-content>
     </ion-card>
-    <ion-card>
+
+    <ion-card *ngIf="regionData">
       <ion-card-header>
-        <ion-card-title>Deaths</ion-card-title>
+        <ion-card-title>Your Region ({{ regionData.state }})</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <h1>{{ all.deaths | number }}</h1>
+        <h2> Cases Today: {{ regionData.todayCases | number }} -- Deaths Today: {{ regionData.todayDeaths | number }} </h2>
+        <p> Cases: {{ regionData.cases | number}} -- Deaths: {{ regionData.deaths | number}} -- Recovered: {{ regionData.recovered | number}} </p>
+        <hr/>
+        <ion-badge color="tertiary">ACTIVE: {{ regionData.active | number }}</ion-badge>
       </ion-card-content>
     </ion-card>
+    
+    <ion-list *ngIf="bookmarks">
+      <ion-list-header>Bookmarks</ion-list-header>
+      <ion-item *ngFor="let key of objectKeys(bookmarks)" lines="none">
+        <ion-label>
+          <h2><strong>{{ key }}</strong></h2>
+          <h3> Cases Today: {{ bookmarks[key].todayCases | number }} -- Deaths Today: {{ bookmarks[key].todayDeaths | number }} </h3>
+          <p> Cases: {{ bookmarks[key].cases | number}}
+              <br/>Deaths: {{ bookmarks[key].deaths | number}}, 
+              <br/>Recovered: {{ bookmarks[key].recovered | number}} </p>
+        </ion-label>
+        <ion-badge color="tertiary">{{ bookmarks[key].active | number }}</ion-badge>
+        <ion-icon slot="start" ios="close-circle-outline" md="close-circle-sharp" class="icon-button" (click)="removeBookmark(bookmarks[key])"></ion-icon>
+      </ion-item>
+    </ion-list>
+
   </div>
 
   <div *ngIf="countries && folder === 'Countries'">

@@ -4,6 +4,8 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { BookmarkService } from './services/bookmark.service';
+import { GeoService } from './services/geo.service';
+import { CovidService } from './services/covid.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,7 @@ export class AppComponent implements OnInit {
   public objectKeys = Object.keys;
   public appPages = [
     {
-      title: 'World',
+      title: 'Dashboard',
       url: '/folder/World',
       icon: 'earth'
     },
@@ -64,7 +66,6 @@ export class AppComponent implements OnInit {
   }
 
   removeBookmark(item) {
-    console.log('remove: ', item);
     this.bookmarkService.remove(item);
   }
 
