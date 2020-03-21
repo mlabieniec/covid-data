@@ -85,13 +85,13 @@
       <ion-item *ngFor="let key of objectKeys(bookmarks)" lines="none">
         <ion-label>
           <h2><strong>{{ key }}</strong></h2>
-          <ul>
-            <li>Cases Today: {{ bookmarks[key].todayCases | number }}</li>
-            <li>Deaths Today: {{ bookmarks[key].todayDeaths | number }}</li>
-            <li>All Cases: {{ bookmarks[key].cases | number}}</li>
-            <li>All Deaths: {{ bookmarks[key].deaths | number}}</li>
-            <li>All Recovered: {{ bookmarks[key].recovered | number}}</li>
-          </ul>
+          <div>
+            <p>Cases Today: {{ bookmarks[key].todayCases | number }}</p>
+            <p>Deaths Today: {{ bookmarks[key].todayDeaths | number }}</p>
+            <p>All Cases: {{ bookmarks[key].cases | number}}</p>
+            <p>All Deaths: {{ bookmarks[key].deaths | number}}</p>
+            <p>All Recovered: {{ bookmarks[key].recovered | number}}</p>
+          </div>
         </ion-label>
         <ion-badge color="tertiary">{{ bookmarks[key].active | number }}</ion-badge>
         <ion-icon slot="start" ios="close-circle-outline" md="close-circle-sharp" class="icon-button"
