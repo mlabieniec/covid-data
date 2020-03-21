@@ -19,8 +19,8 @@ export class FolderPage implements OnInit {
   public percentRecovered:string;
   public percentDied:string;
   public objectKeys = Object.keys;
-  countryData = {};
-  regionData = {};
+  countryData:any;
+  regionData:any;
   bookmarks:any;
   descending: boolean = false;
   order: number;
@@ -56,19 +56,19 @@ export class FolderPage implements OnInit {
   }
 
   async initLocation() {
-    const location = await this.geoService.getLocation();
+    const geo = await this.geoService.getLocation();
     
-    if (location.country_code) {
-      this.countryData = await this.covid.country(location.country_code).toPromise();
+    if (geo.location.country) {
+      this.countryData = await this.covid.country(geo.location.country).toPromise();
     } else {
       console.log('Could not load country data');
     }
 
-    if (location.region_name) {
+    if (geo.location.region) {
       try {
         this.covid.states().toPromise().then((states:Array<State>) => {
           states.forEach((state:State) => {
-            if (state.state === location.region_name) {
+            if (state.state === geo.location.region) {
               this.regionData = state;
             }
           });
