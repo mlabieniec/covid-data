@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   public appPages = [
     {
       title: 'Dashboard',
-      url: '/folder/World',
+      url: '/folder/Dashboard',
       icon: 'earth'
     },
     {
@@ -27,8 +27,8 @@ export class AppComponent implements OnInit {
       icon: 'flag'
     },
     {
-      title: 'States',
-      url: '/folder/States',
+      title: 'Regions',
+      url: '/folder/Regions',
       icon: 'navigate'
     },
     {

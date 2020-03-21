@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     
-    <ion-buttons slot="end" *ngIf="folder === 'Countries' || folder === 'States'">
+    <ion-buttons slot="end" *ngIf="folder === 'Countries' || folder === 'Regions'">
       <ion-button type="button" (click)="sort()">Sort</ion-button>
     </ion-buttons>
 
@@ -19,7 +19,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <div class="container" *ngIf="all && folder === 'World'">
+  <div class="container" *ngIf="all && folder === 'Dashboard'">
     <h1 class="capitalize">{{ all.updated | date }}</h1>
     <ion-card *ngIf="countryData">
       <ion-card-header>
@@ -88,7 +88,7 @@
       </ion-list>
   </div>
 
-  <div *ngIf="states && folder === 'States'">
+  <div *ngIf="states && folder === 'Regions'">
     <ion-searchbar [(ngModel)]="terms"></ion-searchbar>
       <ion-list>
         <ion-item *ngFor="let item of states | search : terms | sort: {property: column, order: order}">
@@ -103,8 +103,8 @@
       </ion-list>
   </div>
 
-  <div id="container" *ngIf="folder === 'Historical'">
-    <p>Coming Soon</p>
+  <div class="container" *ngIf="folder === 'Historical'">
+    <p style="text-align: center;">Coming Soon</p>
   </div>
 
 </ion-content>

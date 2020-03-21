@@ -36,7 +36,7 @@ export class FolderPage implements OnInit {
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
     switch (this.folder) {
-      case 'World':
+      case 'Dashboard':
         if (!this.all) {
           this.getAllData();
           this.initLocation();
@@ -47,7 +47,7 @@ export class FolderPage implements OnInit {
           this.getCountriesData();
         this.column = 'country';
         break;
-      case 'States':
+      case 'Regions':
         if (!this.states || this.states.length === 0)
           this.getStatesData();
         this.column = 'state';
