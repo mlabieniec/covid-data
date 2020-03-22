@@ -62,7 +62,7 @@ var historical = async () => {
     }
 
     const removeFirstObj = result.splice(1);
-    console.log(`Updated JHU CSSE Historical: ${removeFirstObj.length} locations`);
+    console.log(`Retrieved JHU CSSE Historical: ${removeFirstObj.length} locations`);
     return Promise.resolve(removeFirstObj);
 };
 
@@ -71,13 +71,10 @@ var historical = async () => {
  * @param {*} data: full historical data returned from /historical endpoint
  * @param {*} country: country query param
  */
-async function getHistoricalCountryData(data, country) {
+async function getHistoricalCountryData(data, country, stateData) {
     var countryData;
     if (country == "us") {
-        // get all valid states from /states endpoint
-        // @TODO invoke lambda function instead
-        const response = await axios.get(`https://b42da93exh.execute-api.us-east-2.amazonaws.com/dev/states`);
-        const stateData = response.data;
+
         const states = stateData.map(obj => {
             return obj.state.toLowerCase();
         });
@@ -101,6 +98,12 @@ async function getHistoricalCountryData(data, country) {
         recovered: {}
     };
 
+    const series = {
+        cases: [],
+        deaths: [],
+        recovered: []
+    };
+
     // sum over provinces
     for (var province = 0; province < countryData.length; province++) {
         // loop cases, recovered, deaths for each province
@@ -115,9 +118,19 @@ async function getHistoricalCountryData(data, country) {
         });
     }
 
+    Object.keys(timeline).forEach(specifier => {
+        Object.keys(timeline[specifier]).forEach(date => {
+            series[specifier].push({
+                x: new Date(date),
+                y: timeline[specifier][date]
+            });
+        });
+    });
+
     return ({
         country,
-        timeline
+        timeline,
+        series
     });
 
 }

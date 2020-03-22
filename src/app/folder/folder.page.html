@@ -208,7 +208,35 @@
     </ion-list>
   </div>
 
-  <div class="container" *ngIf="folder === 'Historical'">
-    <p style="text-align: center;">Coming Soon</p>
+  <div *ngIf="folder === 'Historical'">
+    <ion-card *ngIf="chartData" style="text-align: center;">
+      <ion-card-header>
+        <ion-card-title
+          >Your Country ({{ countryData.country }})</ion-card-title
+        >
+        <a routerDirection="root" [routerLink]="['/folder/Countries']"
+          >Change</a
+        >
+      </ion-card-header>
+      <ion-card-content>
+        <h2 class="green">{{ percentCountryRecovered }} Recovered</h2>
+        <h2>{{ percentCountryDied }} Dead</h2>
+        <hr />
+        <ion-chip>Cases Today: {{ countryData.todayCases | number }}</ion-chip>
+        <ion-chip
+          >Deaths Today: {{ countryData.todayDeaths | number }}</ion-chip
+        >
+        <hr />
+        <h2>This Month</h2>
+        <canvas
+          baseChart
+          [chartType]="'line'"
+          [datasets]="chartData"
+          [options]="chartOptions"
+          [legend]="true"
+        >
+        </canvas>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

@@ -63,7 +63,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-covid-data-dev-205332-deployment",
-					"S3Key": "amplify-builds/coviddatab37dc28a-384a6e536e7755466454-build.zip"
+					"S3Key": "amplify-builds/coviddatab37dc28a-6976625a4f774d682b78-build.zip"
 				}
 			}
 		},

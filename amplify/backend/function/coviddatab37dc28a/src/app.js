@@ -61,11 +61,20 @@ app.get('/states', function (req, res) {
   });
 });
 
+app.get("/historical", async function (req, res) {
+  let data = await historical.historical();
+  res.json(data);
+});
+
 app.get("/historical/:country", async function (req, res) {
   let data = await historical.historical();
-  if (req.param.country) {
-    const countryData = await historical.getHistoricalCountryData(data, req.params.country.toLowerCase());
-    res.json(countryData);
+  if (req.params.country) {
+    states().then(async (states) => {
+      const countryData = await historical.getHistoricalCountryData(data, req.params.country.toLowerCase(), states);
+      res.json(countryData);
+    }).catch((error) => res.json({
+      error
+    }));
   } else {
     res.json(data);
   }

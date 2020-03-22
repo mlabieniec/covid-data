@@ -1,9 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { All, Country, CovidService, State } from "../services/covid.service";
 import { LoadingController } from "@ionic/angular";
 import { BookmarkService } from "../services/bookmark.service";
 import { GeoService } from "../services/geo.service";
+import { Platform } from "@ionic/angular";
 
 @Component({
   selector: "app-folder",
@@ -15,6 +16,7 @@ export class FolderPage implements OnInit {
   public all: All;
   public countries: Country[] = [];
   public states: State[] = [];
+  public historical = [];
   public today = new Date();
   public percentRecovered: string;
   public percentDied: string;
@@ -30,36 +32,68 @@ export class FolderPage implements OnInit {
   order: number;
   column: string = "country";
 
+  chartOptions = {
+    responsive: true,
+    scales: {
+      xAxes: [
+        {
+          type: "time",
+          time: {
+            displayFormats: {
+              quarter: "MMM YYYY"
+            }
+          }
+        }
+      ]
+    }
+  };
+
+  chartData;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private covid: CovidService,
     private bookmarkService: BookmarkService,
     public loadingController: LoadingController,
-    private geoService: GeoService
+    private geoService: GeoService,
+    private platform: Platform
   ) {}
 
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get("id");
-    switch (this.folder) {
-      case "Dashboard":
-        if (!this.all) {
-          this.getAllData();
-        }
-        break;
-      case "Countries":
-        if (!this.countries || this.countries.length === 0)
-          this.getCountriesData();
-        this.column = "country";
-        break;
-      case "Regions":
-        if (!this.states || this.states.length === 0) this.getStatesData();
-        this.column = "state";
-        break;
-    }
+
+    this.platform.ready().then(() => {
+      switch (this.folder) {
+        case "Dashboard":
+          if (!this.all) {
+            this.getAllData();
+          }
+          break;
+        case "Countries":
+          if (!this.countries || this.countries.length === 0)
+            this.getCountriesData();
+          this.column = "country";
+          break;
+        case "Regions":
+          if (!this.states || this.states.length === 0) this.getStatesData();
+          this.column = "state";
+          break;
+        case "Historical":
+          if (!this.historical || this.historical.length === 0) {
+            this.initHistorical();
+          }
+          break;
+      }
+    });
   }
 
   refresh() {
     this.getAllData();
+  }
+
+  async initHistorical() {
+    await this.initLocation();
+    this.getHistoricalData();
   }
 
   async initLocation() {
@@ -186,6 +220,46 @@ export class FolderPage implements OnInit {
     });
     loading.present();
     this.states = await this.covid.states();
+    loading.dismiss();
+  }
+
+  async getHistoricalData() {
+    const loading = await this.loadingController.create({
+      message: "Loading Data for " + this.countryData.country,
+      duration: 2000
+    });
+    loading.present();
+    let historical: any = await this.covid.historical(
+      this.countryData.country === "USA" ? "US" : this.countryData.country
+    );
+    let monthlySeries = {
+      cases: [],
+      recovered: [],
+      deaths: []
+    };
+    Object.keys(historical.series).forEach(specifier => {
+      historical.series[specifier].forEach(item => {
+        let thisMonth = new Date().getMonth();
+        let seriesMonth = new Date(item.x).getMonth();
+        if (thisMonth === seriesMonth) {
+          monthlySeries[specifier].push(item);
+        }
+      });
+    });
+    this.chartData = [
+      {
+        label: "Cases",
+        data: monthlySeries.cases
+      },
+      {
+        label: "Recovered",
+        data: monthlySeries.recovered
+      },
+      {
+        label: "Deaths",
+        data: monthlySeries.deaths
+      }
+    ];
     loading.dismiss();
   }
 }

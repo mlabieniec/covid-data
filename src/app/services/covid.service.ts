@@ -41,9 +41,6 @@ export interface State {
   providedIn: "root"
 })
 export class CovidService {
-  // Root URL for https://github.com/NovelCOVID/API
-  // private api = "https://corona.lmao.ninja";
-
   constructor() {}
 
   /**
@@ -85,8 +82,8 @@ export class CovidService {
 
   /**
    * Get historical data from the start of 2020. (JHU CSSE GISand Data)
-  public historical(): Observable<any> {
-    return this.http.get(`${this.api}/historical`);
+   */
+  public historical(country?: string): Promise<any> {
+    return API.get(api, country ? `/historical/${country}` : "/historical", {});
   }
-  */
 }
