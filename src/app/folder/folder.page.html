@@ -78,6 +78,10 @@
       </ion-card-content>
     </ion-card>
 
+    <ion-button [routerLink]="['/folder/Countries']" *ngIf="!countryData"
+      >Set Home Country</ion-button
+    >
+
     <ion-card *ngIf="regionData">
       <ion-card-header>
         <ion-card-title>Your Region ({{ regionData.state }})</ion-card-title>
@@ -106,6 +110,10 @@
         >
       </ion-card-content>
     </ion-card>
+
+    <ion-button [routerLink]="['/folder/Regions']" *ngIf="!regionData"
+      >Set Home Region</ion-button
+    >
 
     <h1 class="capitalize">Bookmarks</h1>
     <ion-list *ngIf="bookmarks">

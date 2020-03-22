@@ -4,7 +4,7 @@ An ionic app for browser COVID-19 data. Using https://github.com/NovelCOVID/API
 
 ![screenshot](src/assets/screenshot.png)
 
-## Live Site: https://master.d1xssd87pvtbqn.amplifyapp.com/
+## Live Site: https://live-site.d1xssd87pvtbqn.amplifyapp.com/
 
 # Getting Started
 

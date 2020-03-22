@@ -31,9 +31,15 @@ export class GeoService {
       let geo = JSON.parse(window.localStorage.getItem("geo"));
       if (geo && geo.location) {
         geo.location.country = c.country;
-        this._geo = geo;
-        this._persistGeo();
+      } else {
+        geo = {
+          location: {
+            country: c.country
+          }
+        };
       }
+      this._geo = geo;
+      this._persistGeo();
     } catch (error) {
       console.log(error);
     }
@@ -44,9 +50,15 @@ export class GeoService {
       let geo = JSON.parse(window.localStorage.getItem("geo"));
       if (geo && geo.location) {
         geo.location.region = s.state;
-        this._geo = geo;
-        this._persistGeo();
+      } else {
+        geo = {
+          location: {
+            country: s.state
+          }
+        };
       }
+      this._geo = geo;
+      this._persistGeo();
     } catch (error) {
       console.log(error);
     }
