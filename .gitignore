@@ -40,7 +40,7 @@ amplify/team-provider-info.json
 build/
 dist/
 node_modules/
-#aws-exports.js
+aws-exports.js
 awsconfiguration.json
 amplifyconfiguration.json
 amplify-gradle-config.json
