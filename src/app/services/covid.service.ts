@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import API from "@aws-amplify/api";
 import Config from "src/aws-exports";
 API.configure(Config);
 
-// amplify add api
+// If this is undefined, make sure you ran `amplify init` on
+// your project root directory (see README)
 const api = Config.aws_cloud_logic_custom[0].name;
 
 export interface All {
@@ -42,49 +42,51 @@ export interface State {
 })
 export class CovidService {
   // Root URL for https://github.com/NovelCOVID/API
-  private api = "https://corona.lmao.ninja";
+  // private api = "https://corona.lmao.ninja";
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   /**
    * Returns all total cases, recovery, and deaths.
    */
   public all(): Promise<any | All> {
-    //return this.http.get(`${this.api}/all`);
     return API.get(api, "/all", {});
   }
 
   /**
    * Returns data of all countries that has COVID-19
-   * @param sort Returns data of each country sorted by the parameter
    */
-  public countries(sort?: string): Promise<any | [Country]> {
-    /*return this.http.get(
-      this.api + (sort ? `/countries?sort=${sort}` : "/countries")
-    );*/
-    return API.get(api, sort ? `/countries?sort=${sort}` : "/countries", {});
+  public countries(): Promise<any | [Country]> {
+    return API.get(api, "/countries", {});
   }
 
   /**
    * Returns data of a specific country
    * @param country The country
    */
-  public country(country: string): Promise<any | Country> {
-    return this.http.get(`${this.api}/countries/${country}`).toPromise();
+  public async country(country: string): Promise<any | Country> {
+    try {
+      let countries = await API.get(api, "/countries", {});
+      let c = countries.find(e =>
+        e.country.toLowerCase().includes(country.toLowerCase())
+      );
+      return Promise.resolve(c);
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 
   /**
    * Returns all United States of America and their Corona data
    */
   public states(): Promise<any | [State]> {
-    //return this.http.get(`${this.api}/states`);
     return API.get(api, "/states", {});
   }
 
   /**
    * Get historical data from the start of 2020. (JHU CSSE GISand Data)
-   */
   public historical(): Observable<any> {
     return this.http.get(`${this.api}/historical`);
   }
+  */
 }

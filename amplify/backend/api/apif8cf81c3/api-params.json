@@ -20,6 +20,13 @@
             "privacy": {
                 "open": true
             }
+        },
+        {
+            "name": "/historical",
+            "lambdaFunction": "coviddatab37dc28a",
+            "privacy": {
+                "open": true
+            }
         }
     ],
     "resourceName": "apif8cf81c3",
@@ -44,5 +51,6 @@
                 "Arn"
             ]
         }
-    ]
+    ],
+    "uuid": "b933caf6"
 }

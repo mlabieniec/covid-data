@@ -3,7 +3,8 @@ var bodyParser = require('body-parser');
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 var all = require('./apis/all'),
   countries = require('./apis/countries'),
-  states = require('./apis/states');
+  states = require('./apis/states'),
+  historical = require('./apis/historical');
 
 var app = express();
 app.use(bodyParser.json());
@@ -17,7 +18,6 @@ app.use(function (req, res, next) {
 
 app.get('', function (req, res) {
   countries().then((result) => {
-    console.log('result: ', result);
     res.json(result);
   }).catch((error) => {
     console.log('error: ', error);
@@ -45,7 +45,6 @@ app.get('/countries', function (req, res) {
   }).catch((error) => {
     console.log('error: ', error);
     res.json({
-      body: null,
       error: error
     });
   });
@@ -57,10 +56,19 @@ app.get('/states', function (req, res) {
   }).catch((error) => {
     console.log('error: ', error);
     res.json({
-      body: null,
       error: error
     });
   });
+});
+
+app.get("/historical/:country", async function (req, res) {
+  let data = await historical.historical();
+  if (req.param.country) {
+    const countryData = await historical.getHistoricalCountryData(data, req.params.country.toLowerCase());
+    res.json(countryData);
+  } else {
+    res.json(data);
+  }
 });
 
 app.listen(3000, function () {

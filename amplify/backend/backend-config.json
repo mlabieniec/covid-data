@@ -1,25 +1,25 @@
 {
-	"function": {
-		"coviddatab37dc28a": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true
-		}
-	},
-	"api": {
-		"apif8cf81c3": {
-			"service": "API Gateway",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [
-				{
-					"category": "function",
-					"resourceName": "coviddatab37dc28a",
-					"attributes": [
-						"Name",
-						"Arn"
-					]
-				}
-			]
-		}
-	}
+    "function": {
+        "coviddatab37dc28a": {
+            "service": "Lambda",
+            "providerPlugin": "awscloudformation",
+            "build": true
+        }
+    },
+    "api": {
+        "apif8cf81c3": {
+            "service": "API Gateway",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [
+                {
+                    "category": "function",
+                    "resourceName": "coviddatab37dc28a",
+                    "attributes": [
+                        "Name",
+                        "Arn"
+                    ]
+                }
+            ]
+        }
+    }
 }

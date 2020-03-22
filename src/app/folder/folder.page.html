@@ -37,11 +37,9 @@
         <h2>{{ percentDied }} Dead</h2>
         <hr />
         <p>
-          <ion-chip>Cases: <strong>{{ all.cases | number}}</strong></ion-chip>
-          <ion-chip>Deaths: <strong>{{ all.deaths | number}}</strong></ion-chip>
-          <ion-chip
-            >Recovered: <strong>{{ all.recovered | number}}</strong></ion-chip
-          >
+          <ion-chip>Cases: {{ all.cases | number}}</ion-chip>
+          <ion-chip>Deaths: {{ all.deaths | number}}</ion-chip>
+          <ion-chip>Recovered: {{ all.recovered | number}}</ion-chip>
         </p>
       </ion-card-content>
     </ion-card>
