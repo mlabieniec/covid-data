@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     {
       title: "Historical",
       url: "/folder/Historical",
-      icon: "archive"
+      icon: "stats-chart"
     }
   ];
   public bookmarks = {};

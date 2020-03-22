@@ -47,7 +47,6 @@ export class FolderPage implements OnInit {
       ]
     }
   };
-
   chartData;
 
   constructor(

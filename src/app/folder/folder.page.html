@@ -220,9 +220,7 @@
         <ion-card-title
           >Your Country ({{ countryData.country }})</ion-card-title
         >
-        <a routerDirection="root" [routerLink]="['/folder/Countries']"
-          >Change</a
-        >
+        <a href="/folder/Countries">Change</a>
       </ion-card-header>
       <ion-card-content>
         <h2 class="blue">{{ percentCountryRecovered }} Recovered</h2>
@@ -240,8 +238,7 @@
           [datasets]="chartData"
           [options]="chartOptions"
           [legend]="true"
-        >
-        </canvas>
+        ></canvas>
       </ion-card-content>
     </ion-card>
   </div>
