@@ -1,10 +1,10 @@
 # COVID-19 Data Browser
 
-An ionic app for browser COVID-19 data. Using https://github.com/NovelCOVID/API
+An ionic app for browsing COVID-19 data from worldometers.info/coronavirus and public John Hopkins data sets.
 
 ![screenshot](src/assets/screenshot.png)
 
-## Live Site: https://master.d1xssd87pvtbqn.amplifyapp.com/
+## Live Site: https://live-site.d1xssd87pvtbqn.amplifyapp.com/
 
 # Getting Started
 
