@@ -48,9 +48,7 @@
         <ion-card-title
           >Your Country ({{ countryData.country }})</ion-card-title
         >
-        <a routerDirection="root" [routerLink]="['/folder/Countries']"
-          >Change</a
-        >
+        <a href="/folder/Countries">Change</a>
       </ion-card-header>
       <ion-card-content>
         <h2 class="green">{{ percentCountryRecovered }} Recovered</h2>
@@ -85,7 +83,7 @@
     <ion-card *ngIf="regionData">
       <ion-card-header>
         <ion-card-title>Your Region ({{ regionData.state }})</ion-card-title>
-        <a routerDirection="root" [routerLink]="['/folder/Regions']">Change</a>
+        <a href="/folder/Regions">Change</a>
       </ion-card-header>
       <ion-card-content>
         <h2 class="green">{{ percentStateRecovered }} Recovered</h2>

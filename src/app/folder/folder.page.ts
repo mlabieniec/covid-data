@@ -158,12 +158,12 @@ export class FolderPage implements OnInit {
 
   addHomeCountry(c: Country) {
     this.geoService.setHomeCountry(c);
-    alert("Home country updated, refresh the dashboard");
+    alert("Home country updated");
   }
 
   addHomeState(s: State) {
     this.geoService.setHomeState(s);
-    alert("Home region updated, refresh the dashboard");
+    alert("Home region updated");
   }
 
   addBookmark(item: Country | State) {
@@ -183,7 +183,6 @@ export class FolderPage implements OnInit {
     loading.present();
     try {
       this.all = await this.covid.all();
-      console.log("all: ", this.all);
       this.percentRecovered =
         (((this.all.recovered as any) / (this.all.cases as any)) * 100).toFixed(
           2
