@@ -71,9 +71,7 @@ export class FolderPage implements OnInit {
     try {
       const geo = await this.geoService.getLocation();
       if (geo && geo.location && geo.location.country) {
-        this.countryData = await this.covid
-          .country(geo.location.country)
-          .toPromise();
+        this.countryData = await this.covid.country(geo.location.country);
         this.percentCountryRecovered =
           (
             ((this.countryData.recovered as any) /
@@ -90,28 +88,25 @@ export class FolderPage implements OnInit {
         console.log("Could not load country data");
       }
       if (geo && geo.location && geo.location.region) {
-        this.covid
-          .states()
-          .toPromise()
-          .then((states: Array<State>) => {
-            states.forEach((state: State) => {
-              if (state.state === geo.location.region) {
-                this.regionData = state;
-                this.percentStateRecovered =
-                  (
-                    ((this.regionData.recovered as any) /
-                      (this.regionData.cases as any)) *
-                    100
-                  ).toFixed(2) + "%";
-                this.percentStateDied =
-                  (
-                    ((this.regionData.deaths as any) /
-                      (this.regionData.cases as any)) *
-                    100
-                  ).toFixed(2) + "%";
-              }
-            });
+        this.covid.states().then((states: Array<State>) => {
+          states.forEach((state: State) => {
+            if (state.state === geo.location.region) {
+              this.regionData = state;
+              this.percentStateRecovered =
+                (
+                  ((this.regionData.recovered as any) /
+                    (this.regionData.cases as any)) *
+                  100
+                ).toFixed(2) + "%";
+              this.percentStateDied =
+                (
+                  ((this.regionData.deaths as any) /
+                    (this.regionData.cases as any)) *
+                  100
+                ).toFixed(2) + "%";
+            }
           });
+        });
       } else {
         console.log("Could not load region data");
       }
@@ -153,7 +148,8 @@ export class FolderPage implements OnInit {
     });
     loading.present();
     try {
-      this.all = await this.covid.all().toPromise();
+      this.all = await this.covid.all();
+      console.log("all: ", this.all);
       this.percentRecovered =
         (((this.all.recovered as any) / (this.all.cases as any)) * 100).toFixed(
           2
@@ -179,7 +175,7 @@ export class FolderPage implements OnInit {
       duration: 2000
     });
     loading.present();
-    this.countries = await this.covid.countries().toPromise();
+    this.countries = await this.covid.countries();
     loading.dismiss();
   }
 
@@ -189,7 +185,7 @@ export class FolderPage implements OnInit {
       duration: 2000
     });
     loading.present();
-    this.states = await this.covid.states().toPromise();
+    this.states = await this.covid.states();
     loading.dismiss();
   }
 }

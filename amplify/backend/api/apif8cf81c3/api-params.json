@@ -1,0 +1,48 @@
+{
+    "paths": [
+        {
+            "name": "/all",
+            "lambdaFunction": "coviddatab37dc28a",
+            "privacy": {
+                "open": true
+            }
+        },
+        {
+            "name": "/countries",
+            "lambdaFunction": "coviddatab37dc28a",
+            "privacy": {
+                "open": true
+            }
+        },
+        {
+            "name": "/states",
+            "lambdaFunction": "coviddatab37dc28a",
+            "privacy": {
+                "open": true
+            }
+        }
+    ],
+    "resourceName": "apif8cf81c3",
+    "apiName": "apif8cf81c3",
+    "functionArns": [
+        {
+            "lambdaFunction": "coviddatab37dc28a"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-covid-data-dev-205332-authRole",
+        "unAuthRoleName": "amplify-covid-data-dev-205332-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "coviddatab37dc28a",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

@@ -48,8 +48,8 @@ export class BookmarkService {
   }
 
   private async _refresh() {
-    const countries = await this.covid.countries().toPromise();
-    const states = await this.covid.states().toPromise();
+    const countries = await this.covid.countries();
+    const states = await this.covid.states();
     try {
       countries.forEach(c => {
         for (let k in this.bookmarks) {
