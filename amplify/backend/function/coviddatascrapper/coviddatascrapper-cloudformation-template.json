@@ -32,12 +32,12 @@
 				"FunctionName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"coviddatab37dc28a",
+						"coviddatascrapper",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"coviddatab37dc28a",
+									"coviddatascrapper",
 									"-",
 									{
 										"Ref": "env"
@@ -70,7 +70,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-covid-data-dev-205332-deployment",
-					"S3Key": "amplify-builds/coviddatab37dc28a-6d765a7644386a363654-build.zip"
+					"S3Key": "amplify-builds/coviddatascrapper-466434514e73414d7532-build.zip"
 				}
 			}
 		},
@@ -80,12 +80,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"coviddataLambdaRoled3e124cc",
+						"coviddataLambdaRole306acad2",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"coviddataLambdaRoled3e124cc",
+									"coviddataLambdaRole306acad2",
 									"-",
 									{
 										"Ref": "env"
@@ -174,8 +174,10 @@
 						{
 							"Effect": "Allow",
 							"Action": [
+								"s3:PutObject",
 								"s3:GetObject",
-								"s3:ListBucket"
+								"s3:ListBucket",
+								"s3:DeleteObject"
 							],
 							"Resource": [
 								{
