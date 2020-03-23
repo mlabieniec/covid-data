@@ -4,10 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <ion-buttons
-      slot="end"
-      *ngIf="folder === 'Countries' || folder === 'Regions'"
-    >
+    <ion-buttons slot="end" *ngIf="folder === 'Countries' || folder === 'Regions'">
       <ion-button type="button" (click)="sort()">Sort</ion-button>
     </ion-buttons>
 
@@ -45,45 +42,31 @@
     </ion-card>
     <ion-card *ngIf="countryData">
       <ion-card-header>
-        <ion-card-title
-          >Your Country ({{ countryData.country }})</ion-card-title
-        >
-        <a href="/folder/Countries">Change</a>
+        <ion-card-title>Your Country ({{ countryData.country }})</ion-card-title>
+        <a [routerLink]="['/folder/Countries']">Change</a>
       </ion-card-header>
       <ion-card-content>
         <h2 class="green">{{ percentCountryRecovered }} Recovered</h2>
         <h2>{{ percentCountryDied }} Dead</h2>
         <hr />
         <ion-chip>Cases Today: {{ countryData.todayCases | number }}</ion-chip>
-        <ion-chip
-          >Deaths Today: {{ countryData.todayDeaths | number }}</ion-chip
-        >
+        <ion-chip>Deaths Today: {{ countryData.todayDeaths | number }}</ion-chip>
         <p>
-          <ion-chip color="secondary"
-            >Cases: {{ countryData.cases | number}}</ion-chip
-          >
-          <ion-chip color="secondary"
-            >Deaths: {{ countryData.deaths | number}}</ion-chip
-          >
-          <ion-chip color="secondary"
-            >Recovered:{{ countryData.recovered | number}}</ion-chip
-          >
+          <ion-chip color="secondary">Cases: {{ countryData.cases | number}}</ion-chip>
+          <ion-chip color="secondary">Deaths: {{ countryData.deaths | number}}</ion-chip>
+          <ion-chip color="secondary">Recovered:{{ countryData.recovered | number}}</ion-chip>
         </p>
         <hr />
-        <ion-badge color="tertiary"
-          >ACTIVE: {{ countryData.active | number }}</ion-badge
-        >
+        <ion-badge color="tertiary">ACTIVE: {{ countryData.active | number }}</ion-badge>
       </ion-card-content>
     </ion-card>
 
-    <ion-button [routerLink]="['/folder/Countries']" *ngIf="!countryData"
-      >Set Home Country</ion-button
-    >
+    <ion-button [routerLink]="['/folder/Countries']" *ngIf="!countryData">Set Home Country</ion-button>
 
     <ion-card *ngIf="regionData">
       <ion-card-header>
         <ion-card-title>Your Region ({{ regionData.state }})</ion-card-title>
-        <a href="/folder/Regions">Change</a>
+        <a [routerLink]="['/folder/Regions']">Change</a>
       </ion-card-header>
       <ion-card-content>
         <h2 class="green">{{ percentStateRecovered }} Recovered</h2>
@@ -92,26 +75,17 @@
         <ion-chip>Cases Today: {{ regionData.todayCases | number }}</ion-chip>
         <ion-chip>Deaths Today: {{ regionData.todayDeaths | number }}</ion-chip>
         <p>
-          <ion-chip color="secondary"
-            >Cases: {{ regionData.cases | number}}</ion-chip
-          >
-          <ion-chip color="secondary"
-            >Deaths: {{ regionData.deaths | number}}</ion-chip
-          >
-          <ion-chip color="secondary"
-            >Recovered: {{ regionData.recovered | number}}
+          <ion-chip color="secondary">Cases: {{ regionData.cases | number}}</ion-chip>
+          <ion-chip color="secondary">Deaths: {{ regionData.deaths | number}}</ion-chip>
+          <ion-chip color="secondary">Recovered: {{ regionData.recovered | number}}
           </ion-chip>
         </p>
         <hr />
-        <ion-badge color="tertiary"
-          >ACTIVE: {{ regionData.active | number }}</ion-badge
-        >
+        <ion-badge color="tertiary">ACTIVE: {{ regionData.active | number }}</ion-badge>
       </ion-card-content>
     </ion-card>
 
-    <ion-button [routerLink]="['/folder/Regions']" *ngIf="!regionData"
-      >Set Home Region</ion-button
-    >
+    <ion-button [routerLink]="['/folder/Regions']" *ngIf="!regionData">Set Home Region</ion-button>
 
     <h1 class="capitalize">Bookmarks</h1>
     <ion-list *ngIf="bookmarks">
@@ -126,16 +100,9 @@
             <p>All Recovered: {{ bookmarks[key].recovered | number}}</p>
           </div>
         </ion-label>
-        <ion-badge color="tertiary"
-          >{{ bookmarks[key].active | number }}</ion-badge
-        >
-        <ion-icon
-          slot="start"
-          ios="close-circle-outline"
-          md="close-circle-sharp"
-          class="icon-button"
-          (click)="removeBookmark(bookmarks[key])"
-        ></ion-icon>
+        <ion-badge color="tertiary">{{ bookmarks[key].active | number }}</ion-badge>
+        <ion-icon slot="start" ios="close-circle-outline" md="close-circle-sharp" class="icon-button"
+          (click)="removeBookmark(bookmarks[key])"></ion-icon>
       </ion-item>
     </ion-list>
   </div>
@@ -143,9 +110,7 @@
   <div *ngIf="countries && folder === 'Countries'">
     <ion-searchbar [(ngModel)]="terms"></ion-searchbar>
     <ion-list>
-      <ion-item
-        *ngFor="let item of countries | search : terms | sort: {property: column, order: order}"
-      >
+      <ion-item *ngFor="let item of countries | search : terms | sort: {property: column, order: order}">
         <ion-label>
           <h2><strong>{{ item.country }}</strong></h2>
           <h3>
@@ -158,20 +123,9 @@
           </p>
         </ion-label>
         <ion-badge color="tertiary">{{ item.active | number }}</ion-badge>
-        <ion-icon
-          slot="start"
-          ios="bookmark-outline"
-          md="bookmark-sharp"
-          class="icon-button"
-          (click)="addBookmark(item)"
-        ></ion-icon>
-        <ion-icon
-          slot="start"
-          ios="home-outline"
-          md="home-sharp"
-          class="icon-button"
-          (click)="addHomeCountry(item)"
-        >
+        <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp" class="icon-button"
+          (click)="addBookmark(item)"></ion-icon>
+        <ion-icon slot="start" ios="home-outline" md="home-sharp" class="icon-button" (click)="addHomeCountry(item)">
         </ion-icon>
       </ion-item>
     </ion-list>
@@ -180,9 +134,7 @@
   <div *ngIf="states && folder === 'Regions'">
     <ion-searchbar [(ngModel)]="terms"></ion-searchbar>
     <ion-list>
-      <ion-item
-        *ngFor="let item of states | search : terms | sort: {property: column, order: order}"
-      >
+      <ion-item *ngFor="let item of states | search : terms | sort: {property: column, order: order}">
         <ion-label>
           <h2><strong>{{ item.state }}</strong></h2>
           <h3>
@@ -195,20 +147,9 @@
           </p>
         </ion-label>
         <ion-badge color="tertiary">{{ item.active | number }}</ion-badge>
-        <ion-icon
-          slot="start"
-          ios="bookmark-outline"
-          md="bookmark-sharp"
-          class="icon-button"
-          (click)="addBookmark(item)"
-        ></ion-icon>
-        <ion-icon
-          slot="start"
-          ios="home-outline"
-          md="home-sharp"
-          class="icon-button"
-          (click)="addHomeState(item)"
-        >
+        <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp" class="icon-button"
+          (click)="addBookmark(item)"></ion-icon>
+        <ion-icon slot="start" ios="home-outline" md="home-sharp" class="icon-button" (click)="addHomeState(item)">
         </ion-icon>
       </ion-item>
     </ion-list>
@@ -217,28 +158,18 @@
   <div *ngIf="folder === 'Historical'">
     <ion-card *ngIf="chartData" style="text-align: center;">
       <ion-card-header>
-        <ion-card-title
-          >Your Country ({{ countryData.country }})</ion-card-title
-        >
-        <a href="/folder/Countries">Change</a>
+        <ion-card-title>Your Country ({{ countryData.country }})</ion-card-title>
+        <a [routerLink]="['/folder/Countries']">Change</a>
       </ion-card-header>
       <ion-card-content>
         <h2 class="blue">{{ percentCountryRecovered }} Recovered</h2>
         <h2 class="yellow">{{ percentCountryDied }} Dead</h2>
         <hr />
         <ion-chip>Cases Today: {{ countryData.todayCases | number }}</ion-chip>
-        <ion-chip
-          >Deaths Today: {{ countryData.todayDeaths | number }}</ion-chip
-        >
+        <ion-chip>Deaths Today: {{ countryData.todayDeaths | number }}</ion-chip>
         <hr />
         <h2>This Month</h2>
-        <canvas
-          baseChart
-          [chartType]="'line'"
-          [datasets]="chartData"
-          [options]="chartOptions"
-          [legend]="true"
-        ></canvas>
+        <canvas baseChart [chartType]="'line'" [datasets]="chartData" [options]="chartOptions" [legend]="true"></canvas>
       </ion-card-content>
     </ion-card>
   </div>
