@@ -8,7 +8,14 @@ const awsmobile = {
             "endpoint": "https://b42da93exh.execute-api.us-east-2.amazonaws.com/dev",
             "region": "us-east-2"
         }
-    ]
+    ],
+    "aws_cognito_identity_pool_id": "us-east-2:7358297f-def0-4ddc-8ca7-2a9133354480",
+    "aws_cognito_region": "us-east-2",
+    "aws_user_pools_id": "us-east-2_aH6Ie8IRA",
+    "aws_user_pools_web_client_id": "1rk1aaqduibmon90d7bdbjn0hh",
+    "oauth": {},
+    "aws_user_files_s3_bucket": "covid-dataed8bb23c0bdb4875a2b37d496f9e0282dev-dev",
+    "aws_user_files_s3_bucket_region": "us-east-2"
 };
 
 

@@ -3,7 +3,30 @@
         "coviddatab37dc28a": {
             "service": "Lambda",
             "providerPlugin": "awscloudformation",
-            "build": true
+            "build": true,
+            "dependsOn": [
+                {
+                    "category": "storage",
+                    "resourceName": "coviddata",
+                    "attributes": [
+                        "BucketName"
+                    ]
+                }
+            ]
+        },
+        "coviddatascrapper": {
+            "service": "Lambda",
+            "providerPlugin": "awscloudformation",
+            "build": true,
+            "dependsOn": [
+                {
+                    "category": "storage",
+                    "resourceName": "coviddata",
+                    "attributes": [
+                        "BucketName"
+                    ]
+                }
+            ]
         }
     },
     "api": {
@@ -20,6 +43,19 @@
                     ]
                 }
             ]
+        }
+    },
+    "auth": {
+        "coviddata749e3f19": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": []
+        }
+    },
+    "storage": {
+        "coviddata": {
+            "service": "S3",
+            "providerPlugin": "awscloudformation"
         }
     }
 }
