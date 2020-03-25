@@ -69,7 +69,7 @@
         <a [routerLink]="['/folder/Regions']">Change</a>
       </ion-card-header>
       <ion-card-content>
-        <h2 class="green">{{ percentStateRecovered }} Recovered</h2>
+        <!--<h2 class="green">{{ percentStateRecovered }} Recovered</h2>-->
         <h2>{{ percentStateDied }} Dead</h2>
         <hr />
         <ion-chip>Cases Today: {{ regionData.todayCases | number }}</ion-chip>
@@ -77,8 +77,8 @@
         <p>
           <ion-chip color="secondary">Cases: {{ regionData.cases | number}}</ion-chip>
           <ion-chip color="secondary">Deaths: {{ regionData.deaths | number}}</ion-chip>
-          <ion-chip color="secondary">Recovered: {{ regionData.recovered | number}}
-          </ion-chip>
+          <!--<ion-chip color="secondary">Recovered: {{ regionData.recovered | number}}
+          </ion-chip>-->
         </p>
         <hr />
         <ion-badge color="tertiary">ACTIVE: {{ regionData.active | number }}</ion-badge>
@@ -97,7 +97,7 @@
             <p>Deaths Today: {{ bookmarks[key].todayDeaths | number }}</p>
             <p>All Cases: {{ bookmarks[key].cases | number}}</p>
             <p>All Deaths: {{ bookmarks[key].deaths | number}}</p>
-            <p>All Recovered: {{ bookmarks[key].recovered | number}}</p>
+            <p *ngIf="bookmarks[key].recovered">All Recovered: {{ bookmarks[key].recovered | number}}</p>
           </div>
         </ion-label>
         <ion-badge color="tertiary">{{ bookmarks[key].active | number }}</ion-badge>
@@ -143,7 +143,8 @@
           </h3>
           <p>
             Cases: {{ item.cases | number}}, Deaths: {{ item.deaths | number}},
-            Recovered: {{ item.recovered | number}}
+            <span *ngIf="item.recovered">Recovered: {{ item.recovered | number}}</span>
+            <span *ngIf="!item.recovered">Active: {{item.active | number}}</span>
           </p>
         </ion-label>
         <ion-badge color="tertiary">{{ item.active | number }}</ion-badge>

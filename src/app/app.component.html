@@ -25,7 +25,10 @@
                 <p>Deaths Today: <strong>{{ bookmarks[key].todayDeaths | number }}</strong></p>
                 <p>All Cases: <strong>{{ bookmarks[key].cases | number}}</strong></p>
                 <p>All Deaths: <strong>{{ bookmarks[key].deaths | number}}</strong></p>
-                <p>All Recovered: <strong>{{ bookmarks[key].recovered | number}}</strong></p>
+                <p *ngIf="bookmarks[key].recovered">All Recovered:
+                  <strong>{{ bookmarks[key].recovered | number}}</strong></p>
+                <p *ngIf="!bookmarks[key].recovered">Active:
+                  <strong>{{ bookmarks[key].active | number}}</strong></p>
               </div>
             </ion-label>
             <ion-badge color="tertiary">{{ bookmarks[key].active | number }}</ion-badge>

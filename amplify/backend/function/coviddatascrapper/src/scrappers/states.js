@@ -25,14 +25,14 @@ var getStates = async (s3, bucket) => {
     .children("tr")
     .children("td");
   // NOTE: this will change when table format change in website
-  const totalColumns = 8;
+  const totalColumns = 7;
   const stateColIndex = 0;
   const casesColIndex = 1;
   const todayCasesColIndex = 2;
   const deathsColIndex = 3;
   const todayDeathsColIndex = 4;
-  const curedColIndex = 5;
-  const activeColIndex = 6;
+  //const curedColIndex = 5;
+  const activeColIndex = 5;
   // minus totalColumns to skip last row, which is total
   for (let i = 0; i < tablecells.length - totalColumns; i += 1) {
     try {
@@ -88,7 +88,7 @@ var getStates = async (s3, bucket) => {
           10
         );
       }
-      // get cured
+      /*
       if (i % totalColumns === curedColIndex) {
         let cured = cell.children.length != 0 ? cell.children[0].data : "";
         result[result.length - 1].recovered = parseInt(
@@ -96,6 +96,8 @@ var getStates = async (s3, bucket) => {
           10
         );
       }
+      */
+
       // get active
       if (i % totalColumns === activeColIndex) {
         let cured = cell.children.length != 0 ? cell.children[0].data : "";
@@ -111,7 +113,7 @@ var getStates = async (s3, bucket) => {
   var params = {
     Body: new Buffer.from(JSON.stringify(result)),
     Bucket: bucket,
-    Key: 'states.json',
+    Key: "states.json",
     ContentType: "application/json"
   };
   s3.putObject(params, (err, data) => {
